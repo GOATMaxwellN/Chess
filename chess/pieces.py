@@ -1,8 +1,12 @@
 """This module defines classes for every type of chess piece"""
-import logger
-from squares import Squares
-from special_moves import Castle, EnPassant
+from logging import getLogger
 
+import logger
+from interface import BoardToGameInterface
+from special_moves import Castle, EnPassant
+from squares import Squares
+
+stdlogger = getLogger(__name__)
 
 class Piece():
     """Base class for all pieces"""
@@ -243,6 +247,7 @@ class Piece():
         return self.name
 
     def getMoves(self, nameOnly=False):
+        
         if type(self) != King:
             if self.pinnedTo:
                 moves = set(self.pinnedTo).intersection(set(self.moves))
@@ -256,6 +261,8 @@ class Piece():
             moves = self.moves.copy()
             moves.extend(self.castleMoves)
 
+        stdlogger.debug(f"Available moves for {repr(self)}: {list(map(str, moves))}")
+
         if nameOnly:
             # Square.__str__ simply returns the name of a square
             return [str(sq) for sq in moves]
@@ -263,11 +270,8 @@ class Piece():
 
     def canMoveTo(self, square):
         """Checks if square is in this Piece's move list"""
-        if self.pinnedTo:
-            moves = set(self.pinnedTo).intersection(set(self.moves))
-            return square in moves
-        
-        return square in self.moves
+        stdlogger.debug(f"{str(self)} can move to {str(square)}: {square in self.getMoves()}")
+        return square in self.getMoves()
 
 
 class King(Piece):

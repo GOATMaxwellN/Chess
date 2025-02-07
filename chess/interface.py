@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from game import ChessGame
@@ -19,6 +20,7 @@ class BoardToGameInterface:
         """Whenever a ChessGame instance is created, it calls this to
         set itself as the CURRENT_GAME"""
         cls.CURRENT_GAME = game
+        game.check
 
     @classmethod
     def isWhiteTurn(cls):

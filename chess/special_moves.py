@@ -1,9 +1,7 @@
-"""Class that determines whether some of chess' special moves are legal"""
-from squares import Squares
-from PySide6.QtWidgets import QWidget, QHBoxLayout, QPushButton, QSizePolicy
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QIcon
-import resources
+from PySide6.QtWidgets import QHBoxLayout, QPushButton, QSizePolicy, QWidget
+from squares import Squares
 
 class Castle:
 
@@ -88,7 +86,7 @@ class Castle:
 
 class EnPassant:
 
-    canTakeEnPassant = []
+    canTakeEnPassant: list = []
     take = None
     move = None
     resetOnWhiteTurn = False
